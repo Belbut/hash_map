@@ -11,4 +11,8 @@ puts hm
 puts hm.remove("dasd")
 puts hm.remove("Carla")
 
+puts hm.size
+
+hm.clear
 puts hm
+puts hm.size

@@ -2,7 +2,7 @@ class HashMap
   attr_accessor :buckets
 
   def initialize
-    @buckets = Array.new(16) { LinkedList.new }
+    @buckets = clean_hash_map
   end
 
   def hash(key)
@@ -24,11 +24,19 @@ class HashMap
 
     buckets[index].has?(key)
   end
-  
+
   def remove(key)
     index = bucket_index(key)
 
     buckets[index].remove(key)
+  end
+
+  def length
+    buckets.reduce(0) { |sum, linked_list| sum + linked_list.size }
+  end
+
+  def clear
+    @buckets = clean_hash_map
   end
 
   def to_s
@@ -48,6 +56,10 @@ class HashMap
     raise IndexError if index.negative? || index >= buckets.length
 
     index
+  end
+
+  def clean_hash_map
+    Array.new(16) { LinkedList.new }
   end
 end
 
@@ -87,6 +99,17 @@ class LinkedList
 
     slack_node.next_node = node.next_node
     node.value
+  end
+
+  def size
+    node = self
+    i = 0
+
+    until node.next_node.nil?
+      i += 1
+      node = node.next_node
+    end
+    i
   end
 
   def to_s
