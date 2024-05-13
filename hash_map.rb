@@ -55,12 +55,7 @@ class LinkedList
   end
 
   def set(key, value)
-    slack_node = node = self
-
-    until node.next_node.nil? || node.key == key
-      slack_node = node
-      node = node.next_node
-    end
+    slack_node, node = slack_and_node_of_key(key)
 
     if node.key == key
       slack_node.next_node = Node.new(key, value, node.next_node)
@@ -81,6 +76,21 @@ class LinkedList
 
   def to_s
     "HEAD=>  #{@next_node}"
+  end
+
+  private
+
+  # returns the before node (aka slack_node) and the node of key if present [slack_node,node]
+  # otherwise return [nil,nil]
+  def slack_and_node_of_key(key)
+    slack_node = node = self
+
+    until node.next_node.nil? || node.key == key
+      slack_node = node
+      node = node.next_node
+    end
+
+    [slack_node, node]
   end
 end
 
