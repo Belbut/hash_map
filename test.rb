@@ -8,3 +8,4 @@ hm.set("Carlay",22)
 puts hm.length
 
 p hm.keys
+p hm.values

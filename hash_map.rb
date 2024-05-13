@@ -43,6 +43,10 @@ class HashMap
     buckets.reduce([]) { |result, linked_list| result.concat(linked_list.keys) }
   end
 
+  def values
+    buckets.reduce([]) { |result, linked_list| result.concat(linked_list.values) }
+  end
+
   def to_s
     result = "-----------------------------------\n"
     buckets.each_with_index do |bucket, index|
@@ -111,6 +115,10 @@ class LinkedList
 
   def keys
     accumulator([]) { |result, node| result << node.key }
+  end
+  
+  def values 
+    accumulator([]) { |result, node| result << node.value}
   end
 
   def to_s
