@@ -24,6 +24,12 @@ class HashMap
 
     buckets[index].has?(key)
   end
+  
+  def remove(key)
+    index = bucket_index(key)
+
+    buckets[index].remove(key)
+  end
 
   def to_s
     result = "-----------------------------------\n"
@@ -48,7 +54,7 @@ end
 class LinkedList
   attr_accessor :next_node, :key, :value
 
-  def initialize(key = nil, value = nil, next_node = nil)
+  def initialize(key = :head, value = nil, next_node = nil)
     @key = key
     @value = value
     @next_node = next_node
@@ -74,6 +80,15 @@ class LinkedList
     false
   end
 
+  def remove(key)
+    slack_node, node = slack_and_node_of_key(key)
+
+    return nil if node.key != key
+
+    slack_node.next_node = node.next_node
+    node.value
+  end
+
   def to_s
     "HEAD=>  #{@next_node}"
   end
@@ -81,7 +96,7 @@ class LinkedList
   private
 
   # returns the before node (aka slack_node) and the node of key if present [slack_node,node]
-  # otherwise return [nil,nil]
+  # otherwise return [head,head]
   def slack_and_node_of_key(key)
     slack_node = node = self
 

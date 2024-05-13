@@ -7,3 +7,8 @@ hm.set("Carlos",28)
 hm.set("Carlay",22)
 
 puts hm
+
+puts hm.remove("dasd")
+puts hm.remove("Carla")
+
+puts hm
