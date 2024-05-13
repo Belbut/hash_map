@@ -9,3 +9,4 @@ puts hm.length
 
 p hm.keys
 p hm.values
+p hm.entries
