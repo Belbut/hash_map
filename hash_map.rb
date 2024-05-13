@@ -14,11 +14,15 @@ class HashMap
   end
 
   def set(key, value)
-    hash_code = hash(key)
-    index = hash_code % 15
-    raise IndexError if index.negative? || index >= buckets.length
+    index = bucket_index(key)
 
     buckets[index].set(key, value)
+  end
+
+  def has?(key)
+    index = bucket_index(key)
+
+    buckets[index].has?(key)
   end
 
   def to_s
@@ -27,13 +31,23 @@ class HashMap
       result << "[B#{index.to_s.rjust(2, '0')}]-List:#{bucket}"[0..-3]
       result << "\n"
     end
-
     result
+  end
+
+  private
+
+  def bucket_index(key)
+    hash_code = hash(key)
+    index = hash_code % 15 && 3
+    raise IndexError if index.negative? || index >= buckets.length
+
+    index
   end
 end
 
 class LinkedList
-    attr_accessor :next_node, :key , :value
+  attr_accessor :next_node, :key, :value
+
   def initialize(key = nil, value = nil, next_node = nil)
     @key = key
     @value = value
@@ -53,6 +67,16 @@ class LinkedList
     else
       node.next_node = Node.new(key, value)
     end
+  end
+
+  def has?(key)
+    node = self
+    until node.next_node.nil?
+      node = node.next_node
+
+      return true if node.key == key
+    end
+    false
   end
 
   def to_s
