@@ -1,18 +1,10 @@
 require './hash_map.rb'
 
-print `clear`
 hm = HashMap.new
 hm.set("Carla",27)
+puts hm.length
 hm.set("Carlos",28)
 hm.set("Carlay",22)
+puts hm.length
 
-puts hm
-
-puts hm.remove("dasd")
-puts hm.remove("Carla")
-
-puts hm.size
-
-hm.clear
-puts hm
-puts hm.size
+p hm.keys

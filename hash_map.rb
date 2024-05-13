@@ -39,6 +39,10 @@ class HashMap
     @buckets = clean_hash_map
   end
 
+  def keys
+    buckets.reduce([]) { |result, linked_list| result.concat(linked_list.keys) }
+  end
+
   def to_s
     result = "-----------------------------------\n"
     buckets.each_with_index do |bucket, index|
@@ -102,14 +106,11 @@ class LinkedList
   end
 
   def size
-    node = self
-    i = 0
+    accumulator(0) { |sum| sum + 1 }
+  end
 
-    until node.next_node.nil?
-      i += 1
-      node = node.next_node
-    end
-    i
+  def keys
+    accumulator([]) { |result, node| result << node.key }
   end
 
   def to_s
@@ -129,6 +130,17 @@ class LinkedList
     end
 
     [slack_node, node]
+  end
+
+  def accumulator(initial_operand)
+    node = self
+    result = initial_operand
+
+    until node.next_node.nil?
+      node = node.next_node
+      result = yield(result, node)
+    end
+    result
   end
 end
 
