@@ -1,12 +1,15 @@
-require './hash_map.rb'
+require './hash_map'
+require 'faker'
 
 hm = HashMap.new
-hm.set("Carla",27)
-puts hm.length
-hm.set("Carlos",28)
-hm.set("Carlay",22)
-puts hm.length
 
-p hm.keys
-p hm.values
-p hm.entries
+100.times do |_i|
+  key = Faker::Name.first_name
+  value = Faker::Name.last_name
+
+  hm.set(key, value)
+end
+
+puts hm
+
+# need to do the extra credit HashSet
